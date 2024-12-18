@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Home CGI</h1>
+    <p>
+        Ыыыыыы
+    </p>
+    <button onclick="api1()">API-1</button>
+    <p id="out"></p>
+    <script>
+        function api1() {
+        fetch("/api1.py")
+        .then(r => r.text())
+        .then(t => out.innerText = t)
+        }
+    </script>
+
+
+<h1>Registration</h1>
+    <form action="register.py" method="post">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" required><br><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <button type="submit">Register</button>
+    </form>
+</body>
+
+</html>
