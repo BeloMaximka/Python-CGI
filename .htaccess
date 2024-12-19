@@ -1,2 +1,2 @@
 RewriteEngine on
-RewriteRule api1 api1.py
+RewriteRule ^api1.+$ api1.py [END,QSA]

@@ -13,29 +13,80 @@
         Ыыыыыы
     </p>
     <button onclick="api1()">API-1</button>
-    <p id="out"></p>
-    <script>
-        function api1() {
-        fetch("/api1.py")
-        .then(r => r.text())
-        .then(t => out.innerText = t)
-        }
-    </script>
+    <button onclick="api1p()">API-1 POST</button>
+    <button onclick="api415()">API-1 POST 415</button>
 
-
-<h1>Registration</h1>
-    <form action="register.py" method="post">
+    <h1>Registration</h1>
+    <form id="reg-form">
         <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username" required><br><br>
+        <input type="text" id="username" name="username" required value="ЇЇЇЇЇЇЇ"><br><br>
 
         <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" required><br><br>
+        <input type="email" id="email" name="email" required value="john@mail.com"><br><br>
 
         <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password" required><br><br>
+        <input type="password" id="password" name="password" required value="ЇЇЇЇЇЇЇ!"><br><br>
+
+        <label for="confirm_password">Confirm password:</label><br>
+        <input type="password" id="confirm_password" name="confirm_password" required value="ЇЇЇЇЇЇЇ!"><br><br>
 
         <button type="submit">Register</button>
     </form>
+
+    <p id="out"></p>
+
+
+    <script>
+        document.addEventListener("submit", e => {
+            const form = e.target;
+            if(form.id == "reg-form") {
+                e.preventDefault();
+                fetch("/api1/reg", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams(new FormData(form)).toString()
+                }).then(r => r.text())
+                .then(t => out.innerHTML = t);
+            }
+        })
+        function api1() {
+            fetch("/api1/b?x=10&b=true&name=Єїорь&&json=")
+                .then(r => r.text())
+                .then(t => out.innerText = t)
+        }
+
+        function api1p() {
+            fetch("/api1/p", { 
+                method: "POST", 
+                body: JSON.stringify({ username: "exampleЇЇЇ" }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Content-Length': 0,
+                    'My-Header': 'My Value'
+                }
+            })
+            .then(r => {
+                return r.text().then(body => ({ body, status: r.status }));
+             })
+             .then(({ body, status }) => {
+               out.innerHTML = `${body} <b>Status</b>:${status}`;
+        })
+        }
+
+        function api415() {
+            fetch("/api1/p", { 
+                method: "POST", 
+                body: "mybody",
+                headers: {
+                    'Content-Type': 'text/plain',
+                }
+            })
+                .then(r => r.text())
+                .then(t => out.innerHTML = t)
+        }
+    </script>
 </body>
 
 </html>
