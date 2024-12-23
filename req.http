@@ -1,0 +1,14 @@
+###
+POST http://cgi213.loc/user HTTP/1.1
+
+content-type: application/json
+{
+    "email": "mail@mail.com",
+}
+
+###
+GET http://cgi213.loc/user HTTP/1.1
+
+###
+GET http://cgi213.loc/user/auth HTTP/1.1
+
