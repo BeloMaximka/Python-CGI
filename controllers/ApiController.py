@@ -1,5 +1,7 @@
 import json
 from models.RestModel import *
+import urllib
+import urllib.parse
 
 class ApiController:
     def __init__(self):
@@ -24,11 +26,15 @@ class ApiController:
 
     def serve(self, am_data):
         method = am_data["envs"]["REQUEST_METHOD"]
+
+        query_string = urllib.parse.unquote(am_data["envs"]["QUERY_STRING"], encoding="utf-8")
+        query_params = dict(urllib.parse.parse_qsl(query_string))
         self.am_data = am_data
         self.response.meta = RestMeta({
             "service": "Server Application",
             "group": "KN-P-213",
-            "method": method
+            "method": method,
+            "params": query_params
         })
         action_name = f"do_{method.lower()}"
         controller_action = getattr(self, action_name, None)

@@ -36,6 +36,4 @@ class RestMeta:
         self.meta = meta
 
     def to_dict(self):
-        return {
-            "meta": self.meta,
-        }
+        return self.meta
