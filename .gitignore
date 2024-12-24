@@ -1,3 +1,4 @@
 access.log
 error.log
 __pycache__
+db_config.py

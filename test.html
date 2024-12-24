@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test suite</title>
+</head>
+<body>
+    <button onclick="testGet()">GET</button>
+    <pre id="out"></pre>
+    <script>
+        function testGet() {
+            fetch("http://cgi213.loc/user")
+            .then(r => r.json())
+            .then(j => out.innerText = JSON.stringify(j, null, 2));
+        }
+    </script>
+</body>
+</html>

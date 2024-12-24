@@ -8,6 +8,7 @@ sys.stdin = codecs.getreader("utf-8")(sys.stdin.detach())
 
 import os
 import json
+from data.db_context import DbContext
 
 def send_error(code: int=400, phrase:str ="Bad Request", explain: str=None):
     print("Content-Type: text/plain; charset=utf-8")
@@ -63,7 +64,8 @@ else:
             'path': path,
             'controller': controller,
             "category": action,
-            "slug": slug
+            "slug": slug,
+            "db_context": DbContext()
         })
     except Exception as err:
         send_error(explain=err)

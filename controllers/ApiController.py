@@ -12,15 +12,17 @@ class ApiController:
         if status_code != 200:
             self.response.status = RestStatus(status_code)
             print("Status: %d %s" % (status_code, self.response.status.reasonPhrase))
+            print("Access-Control-Allow-Origin: *")
             print("Content-Type: text/plain; charset=utf-8")
             print()
             print(self.response.status.reasonPhrase)
             exit()
         if data != None:
             self.response.data = data
+            print("Access-Control-Allow-Origin: *")
             print("Content-Type: application/json; charset=utf-8")
             print()
-            print(json.dumps(self.response.to_dict(), indent=2))
+            print(json.dumps(self.response.to_dict(), indent=2, default=vars))
             exit()
 
 
@@ -29,6 +31,7 @@ class ApiController:
 
         query_string = urllib.parse.unquote(am_data["envs"]["QUERY_STRING"], encoding="utf-8")
         query_params = dict(urllib.parse.parse_qsl(query_string))
+        self.db_context = am_data["db_context"]
         self.am_data = am_data
         self.response.meta = RestMeta({
             "service": "Server Application",
